@@ -104,3 +104,20 @@ MIT
    [PlOd]: <https://github.com/joemccann/dillinger/tree/master/plugins/onedrive/README.md>
    [PlMe]: <https://github.com/joemccann/dillinger/tree/master/plugins/medium/README.md>
    [PlGa]: <https://github.com/RahulHP/dillinger/blob/master/plugins/googleanalytics/README.md>
+
+## Configuration
+
+The email scripts (`send_mail.py` and `recieve_mail.py`) read the sender account's credentials from environment variables, so nothing secret is stored in the code:
+
+| Variable | Description |
+|---|---|
+| `EMAIL_ADDRESS` | Address of the Gmail account the Raspberry Pi sends alerts from and reads replies with |
+| `EMAIL_PASSWORD` | Password for that account. Use a Gmail [app password](https://support.google.com/accounts/answer/185833), not your main password. |
+
+Both scripts stop with a clear error if either variable is missing. Copy `.env.example` to `.env` (it's git-ignored), fill in the values, and export them before running:
+
+```sh
+cp .env.example .env        # then edit .env
+set -a; source .env; set +a
+sh recognize_face.sh
+```
