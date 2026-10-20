@@ -2,12 +2,19 @@ import imaplib,email
 import urllib.request
 import urllib.parse
 import json
+import os
+
+def _require_env(name):
+    value = os.environ.get(name)
+    if not value:
+        raise RuntimeError(f"{name} environment variable is not set. See .env.example and the Configuration section of README.md.")
+    return value
 
 results = []
 ip_address = []
 
-username = 'pytester.py@gmail.com' #server email address
-password = 'pypypy12' #server email password
+username = os.environ.get('EMAIL_ADDRESS') #server email address
+password = os.environ.get('EMAIL_PASSWORD') #server email password
 imap_url = 'imap.gmail.com'
 
 def auth(username,password,imap_url):
@@ -38,8 +45,8 @@ def receivemail():
     results = []
     ip_address = []
 
-    username = 'pytester.py@gmail.com' #server email address
-    password = 'pypypy12' #server email password
+    username = _require_env('EMAIL_ADDRESS') #server email address
+    password = _require_env('EMAIL_PASSWORD') #server email password
     imap_url = 'imap.gmail.com'
     con = auth(username,password,imap_url)
     con.select('INBOX')

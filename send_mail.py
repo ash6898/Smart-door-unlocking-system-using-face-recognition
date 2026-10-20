@@ -5,11 +5,18 @@ from email.mime.base import MIMEBase
 from email import encoders
 from vid_cap import vid_capt
 import time
+import os
+
+def _require_env(name):
+    value = os.environ.get(name)
+    if not value:
+        raise RuntimeError(f"{name} environment variable is not set. See .env.example and the Configuration section of README.md.")
+    return value
 
 def sendmail():
     
-    email_user = 'pytester.py@gmail.com'#server email address
-    email_password = 'pypypy12' #server email password
+    email_user = _require_env('EMAIL_ADDRESS') #server email address
+    email_password = _require_env('EMAIL_PASSWORD') #server email password
     email_send = 'aakashguru6898@gmail.com' #email address of owner or authority
     
     print('User not recognized...')
